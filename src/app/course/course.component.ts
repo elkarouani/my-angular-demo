@@ -23,7 +23,7 @@ export class CourseComponent {
   }
 
   get courses() { return this._courses; }
-
+ 
   get title() { return this._title; }
 
   addCourse() { this.coursesService.addCourse(); }
