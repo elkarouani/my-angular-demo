@@ -17,4 +17,5 @@ export class CourseComponent {
 
   courses() { return this._courses; }
   title() { return this._title; }
+  isActive() { return true; }
 }
