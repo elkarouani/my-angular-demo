@@ -10,6 +10,7 @@ import { ResumePipe } from './resume.pipe';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { PanelComponent } from './panel/panel.component';
 import { InputFormatDirective } from './input-format.directive';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { InputFormatDirective } from './input-format.directive';
     ResumePipe,
     FavoriteComponent,
     PanelComponent,
-    InputFormatDirective
+    InputFormatDirective,
+    ContactFormComponent
   ],
   imports: [
     BrowserModule,

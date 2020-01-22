@@ -1,0 +1,63 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+	<div ngModelGroup="contact">
+		<div class="form-group">
+			<label for="firstName">First Name</label>
+			<input
+				required
+				minlength="4"
+				maxlength="10"
+				pattern="[a-zA-Z]+"
+				ngModel
+				name="firstname"
+				#firstName="ngModel"
+				(change)="log(firstName)"
+				class="form-control"
+				id="firstName"
+				type="text"
+			/>
+
+			<div
+				class="alert alert-danger"
+				*ngIf="firstName.touched && !firstName.valid"
+			>
+				<div *ngIf="firstName.errors.required">Ce champ est obligatoire</div>
+				<div *ngIf="firstName.errors.minlength">
+					Ce champ doit avoir au moins
+					{{ firstName.errors.minlength.actualLength }} /
+					{{ firstName.errors.minlength.requiredLength }} caractéres
+				</div>
+				<div *ngIf="firstName.errors.pattern">
+					FirstName doit être alphabétique
+				</div>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="lastName">Last Name</label>
+			<input
+				ngModel
+				name="lastname"
+				#lastname
+				class="form-control"
+				id="lastName"
+				type="text"
+			/>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="comment">Comment</label>
+		<textarea
+			ngModel
+			name="comment"
+			#comment
+			class="form-control"
+			id="comment"
+			type="text"
+		></textarea>
+	</div>
+
+	<button class="btn btn-primary">Enregister</button>
+</form>
+
+<p>
+	{{ f.value | json }}
+</p>

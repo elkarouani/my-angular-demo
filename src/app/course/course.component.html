@@ -5,8 +5,8 @@
     <button class="btn btn-primary" (click)="addCourse()">Ajouter</button>
     <ul>
       <h1 [textContent]="title"></h1>
-      <li *ngFor="let course of courses"> 
-        {{ course }} 
+      <li *ngFor="let course of courses">
+        {{ course }}
         <button class="btn btn-sm btn-danger" (click)="removeCourse(course)">Remove</button>
         <button class="btn btn-sm btn-warning" (click)="updateCourse(course)">Update</button>
       </li>
@@ -18,16 +18,7 @@
   </ng-template>
 </div>
 
-<!-- <button 
-  [ngClass]="{
-    'btn btn-primary': false,
-    'btn btn-sm btn-danger': true,
-    'btn btn-sm btn-warning': false
-  }"
-  [ngStyle]="{
-    'font-size': false ? '80px' : '40px'
-  }">
-  hi
-</button> -->
+<button [ngClass]="{ 'btn btn-primary': false, 'btn btn-sm btn-danger': true, 'btn btn-sm btn-warning': false }"
+  [ngStyle]="{ 'font-size': false ? '80px' : '40px' }"> hi </button>
 
 <input type="text" [appInputFormat]="'uppercase'" />
