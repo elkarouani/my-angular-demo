@@ -1,3 +1,4 @@
+import { CoursesService } from './../courses.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,8 +10,8 @@ export class CourseComponent {
   _courses: string[];
   _title: string;
 
-  constructor() {
-    this._courses = ['item1', 'item2', 'item3'];
+  constructor(coursesService: CoursesService) {
+    this._courses = coursesService.courses();
     this._title = 'Courses List : ';
   }
 
