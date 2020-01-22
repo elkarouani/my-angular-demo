@@ -10,7 +10,6 @@
 				ngModel
 				name="firstname"
 				#firstName="ngModel"
-				(change)="log(firstName)"
 				class="form-control"
 				id="firstName"
 				type="text"
@@ -54,10 +53,37 @@
 			type="text"
 		></textarea>
 	</div>
-
-	<button class="btn btn-primary">Enregister</button>
+	<div class="form-group">
+		<label for="ContactMethod">Méthode de contact</label>
+		<select
+			multiple
+			id="ContactMethod"
+			class="form-control"
+			ngModel
+			name="contactMethod"
+			id=""
+		>
+			<option value=""></option>
+			<option [ngValue]="method" *ngFor="let method of ContactMethods">{{
+				method.name
+			}}</option>
+		</select>
+	</div>
+	<div class="radio" *ngFor="let method of ContactMethods">
+		<label for="">
+			<input type="radio" ngModel name="contactMethod2" [value]="method" />
+			{{ method.name }}
+		</label>
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" ngModel name="subscribe" />
+			S'abonner
+		</label>
+	</div>
+	<div class="form-group">
+		<button class="btn btn-primary" [disabled]="!f.valid">Enregister</button>
+	</div>
 </form>
 
-<p>
-	{{ f.value | json }}
-</p>
+<p>{{ f.value | json }}</p>
