@@ -1,15 +1,19 @@
 <div class="container">
-  <ul>
-    <h1 [textContent]="title"></h1>
-    <li *ngFor="let course of courses">{{ course }}</li>
-  </ul>
-  <ul class="list-group">
-    <li class="list-group-item">Title: {{ course.titre | lowercase | uppercase }}</li>
-    <li class="list-group-item">Ratting: {{ course.avis | number:'1.1-2' }}</li>
-    <li class="list-group-item">Students: {{ course.participants }}</li>
-    <li class="list-group-item">Price: {{ course.prix | currency:'MAD':'symbol':'1.1-2' }}</li>
-    <li class="list-group-item">releaseDate: {{ course.publicationDate | date:'yyy-mm-dd' }}</li>
-  </ul>
-  <p>{{ paragraph | resume:5 }}</p>
-  <app-favorite [isFavorite]="isFavorite" (change)="onFavoriteChanged($event)"></app-favorite>
+  <div *ngIf="courses.length > 0; then listCourses else noCourses"></div>
+
+  <ng-template #listCourses>
+    <button class="btn btn-primary" (click)="addCourse()">Ajouter</button>
+    <ul>
+      <h1 [textContent]="title"></h1>
+      <li *ngFor="let course of courses"> 
+        {{ course }} 
+        <button class="btn btn-sm btn-danger" (click)="removeCourse(course)">Remove</button>
+        <button class="btn btn-sm btn-warning" (click)="updateCourse(course)">Update</button>
+      </li>
+      <p [hidden]="true">Hidden secret</p>
+    </ul>
+  </ng-template>
+  <ng-template #noCourses>
+    No courses available
+  </ng-template>
 </div>
