@@ -11,4 +11,5 @@
     <li class="list-group-item">releaseDate: {{ course.publicationDate | date:'yyy-mm-dd' }}</li>
   </ul>
   <p>{{ paragraph | resume:5 }}</p>
+  <app-favorite [isFavorite]="isFavorite" (change)="onFavoriteChanged($event)"></app-favorite>
 </div>

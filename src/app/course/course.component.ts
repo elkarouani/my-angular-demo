@@ -16,6 +16,7 @@ export class CourseComponent {
   _title: string;
   _course: object;
   _paragraph: string;
+  _isFavorite: boolean;
 
   constructor(coursesService: CoursesService) {
     this._courses = coursesService.courses();
@@ -28,6 +29,7 @@ export class CourseComponent {
       publicationDate: new Date(2017, 11, 21)
     };
     this._paragraph = 'kjfhdskjlfhqlskdjhgflkjshqk';
+    this._isFavorite = true;
   }
 
   get course() { return this._course; }
@@ -37,4 +39,8 @@ export class CourseComponent {
   get title() { return this._title; }
 
   get paragraph() { return this._paragraph; }
+
+  get isFavorite() { return this._isFavorite; }
+
+  onFavoriteChanged(args) { console.log(args.newState); }
 }
