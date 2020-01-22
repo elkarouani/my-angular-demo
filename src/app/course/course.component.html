@@ -1,5 +1,14 @@
-<ul>
-  <h1 [textContent]="title()"></h1>
-  <li *ngFor="let course of courses()">{{ course }}</li>
-  <button class="btn btn-primary" [class.active]="isActive">My button</button>
-</ul>
+<div class="container">
+  <ul>
+    <h1 [textContent]="title"></h1>
+    <li *ngFor="let course of courses">{{ course }}</li>
+  </ul>
+  <ul class="list-group">
+    <li class="list-group-item">Title: {{ course.titre | lowercase | uppercase }}</li>
+    <li class="list-group-item">Ratting: {{ course.avis | number:'1.1-2' }}</li>
+    <li class="list-group-item">Students: {{ course.participants }}</li>
+    <li class="list-group-item">Price: {{ course.prix | currency:'MAD':'symbol':'1.1-2' }}</li>
+    <li class="list-group-item">releaseDate: {{ course.publicationDate | date:'yyy-mm-dd' }}</li>
+  </ul>
+  <p>{{ paragraph | resume:5 }}</p>
+</div>
