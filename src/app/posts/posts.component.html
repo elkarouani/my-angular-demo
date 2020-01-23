@@ -1,5 +1,5 @@
 <form>
-	<legend>{{form_setup.action_label}} Post</legend>
+	<legend>{{ form_setup.action_label }} Post</legend>
 	<div class="form-group">
 		<label for="title">Title</label>
 		<input
@@ -22,7 +22,12 @@
 			placeholder="Body"
 		></textarea>
 	</div>
-  <button (click)="(form_setup.type == 'create') ? createPost() : updatePost()" class="btn btn-{{form_setup.action_style}}">{{form_setup.action_label}}</button>
+	<button
+		(click)="form_setup.type == 'create' ? createPost() : updatePost()"
+		class="btn btn-{{ form_setup.action_style }}"
+	>
+		{{ form_setup.action_label }}
+	</button>
 </form>
 <br />
 <ul class="list-group">
@@ -30,8 +35,21 @@
 		<h4>{{ post.title }}</h4>
 		<p>{{ post.body }}</p>
 		<div align="right">
-			<button (click)="editPost(post)" class="btn btn-warning" type="button">
-				Edit
+			<button
+				(click)="editPost(post)"
+				class="btn btn-outline-warning"
+				type="button"
+				style="transition: all .5s ease;"
+			>
+				Edit</button
+			>&nbsp;
+			<button
+				(click)="deletePost(post)"
+				class="btn btn-outline-danger"
+				type="button"
+				style="transition: all .5s ease;"
+			>
+				Delete
 			</button>
 		</div>
 	</li>

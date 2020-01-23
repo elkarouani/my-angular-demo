@@ -5,7 +5,7 @@ import { HttpClient } from "@angular/common/http";
 	templateUrl: "./posts.component.html",
 	styleUrls: ["./posts.component.sass"]
 })
-export class PostsComponent {
+export class PostsComponent implements OnInit {
 	_posts: any;
 	default_post: any = { id: 0, title: "", body: "", userId: "" };
 	_form_setup: any;
@@ -16,12 +16,16 @@ export class PostsComponent {
 			type: "create",
 			action_style: "primary"
 		};
+	}
+
+	ngOnInit() {
 		this.http
 			.get("https://jsonplaceholder.typicode.com/posts")
 			.subscribe(response => {
 				this._posts = response;
 			});
 	}
+
 	get posts() {
 		return this._posts;
 	}
@@ -53,7 +57,6 @@ export class PostsComponent {
 
 		this._posts.forEach((post, index) => {
 			if (post.id === this.default_post.id) {
-				console.log(post.id === this.default_post.id);
 				this._posts[index] = {
 					...post,
 					title: this.default_post.title,
@@ -69,5 +72,20 @@ export class PostsComponent {
 			type: "update",
 			action_style: "danger"
 		};
+	}
+
+	deletePost(selected_post) {
+		this.http
+			.delete("https://jsonplaceholder.typicode.com/posts/" + selected_post.id)
+			.subscribe(response => {
+				this.init_default_post();
+				console.log("%csuccess", "background: #222; color: #bada55");
+			});
+
+		this._posts = this._posts.filter(post => {
+			if (post.id !== selected_post.id) {
+				return post;
+			}
+		});
 	}
 }
