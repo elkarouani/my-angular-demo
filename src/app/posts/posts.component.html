@@ -23,7 +23,7 @@
 		></textarea>
 	</div>
 	<button
-		(click)="form_setup.type == 'create' ? createPost() : updatePost()"
+		(click)="form_setup.type == 'create' ? createPostAction() : updatePostAction()"
 		class="btn btn-{{ form_setup.action_style }}"
 	>
 		{{ form_setup.action_label }}

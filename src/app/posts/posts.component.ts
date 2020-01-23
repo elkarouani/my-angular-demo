@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { PostsService } from "../services/posts.service";
 @Component({
 	selector: "app-posts",
 	templateUrl: "./posts.component.html",
@@ -10,7 +10,7 @@ export class PostsComponent implements OnInit {
 	default_post: any = { id: 0, title: "", body: "", userId: "" };
 	_form_setup: any;
 
-	constructor(private http: HttpClient) {
+	constructor(private postsService: PostsService) {
 		this._form_setup = {
 			action_label: "Add",
 			type: "create",
@@ -18,12 +18,8 @@ export class PostsComponent implements OnInit {
 		};
 	}
 
-	ngOnInit() {
-		this.http
-			.get("https://jsonplaceholder.typicode.com/posts")
-			.subscribe(response => {
-				this._posts = response;
-			});
+	async ngOnInit() {
+		this._posts = await this.postsService.get_posts_from_service();
 	}
 
 	get posts() {
@@ -32,39 +28,31 @@ export class PostsComponent implements OnInit {
 	get form_setup() {
 		return this._form_setup;
 	}
+
 	init_default_post(id = "", title = "", body = "") {
 		this.default_post = { id: id, title: title, body: body, userId: "" };
 	}
-	createPost() {
-		this.http
-			.post("https://jsonplaceholder.typicode.com/posts", this.default_post)
-			.subscribe(response => {
-				console.log(response); // this.default_post = response;
-				this._posts.push(response);
-				this.init_default_post();
-			});
-	}
-	updatePost() {
-		this.http
-			.put(
-				"https://jsonplaceholder.typicode.com/posts/" + this.default_post.id,
-				this.default_post
-			)
-			.subscribe(response => {
-				this.init_default_post();
-				console.log("%csuccess", "background: #222; color: #bada55");
-			});
 
-		this._posts.forEach((post, index) => {
-			if (post.id === this.default_post.id) {
-				this._posts[index] = {
-					...post,
-					title: this.default_post.title,
-					body: this.default_post.body
-				};
-			}
-		});
+	createPostAction() {
+		this.init_default_post();
+		this._posts.push(this.postsService.createPost(this.default_post));
 	}
+
+	updatePostAction() {
+		this.init_default_post();
+		if (this.postsService.updatePost(this.default_post)) {
+			this._posts.forEach((post, index) => {
+				if (post.id === this.default_post.id) {
+					this._posts[index] = {
+						...post,
+						title: this.default_post.title,
+						body: this.default_post.body
+					};
+				}
+			});
+		}
+	}
+
 	editPost(post) {
 		this.init_default_post(post.id, post.title, post.body);
 		this._form_setup = {
@@ -75,17 +63,13 @@ export class PostsComponent implements OnInit {
 	}
 
 	deletePost(selected_post) {
-		this.http
-			.delete("https://jsonplaceholder.typicode.com/posts/" + selected_post.id)
-			.subscribe(response => {
-				this.init_default_post();
-				console.log("%csuccess", "background: #222; color: #bada55");
+		this.init_default_post();
+		if (this.postsService.deletePost(selected_post)) {
+			this._posts = this._posts.filter(post => {
+				if (post.id !== selected_post.id) {
+					return post;
+				}
 			});
-
-		this._posts = this._posts.filter(post => {
-			if (post.id !== selected_post.id) {
-				return post;
-			}
-		});
+		}
 	}
 }
