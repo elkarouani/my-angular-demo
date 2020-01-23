@@ -1,0 +1,33 @@
+<form>
+	<legend>New Post</legend>
+	<div class="form-group">
+		<label for="title">Title</label>
+		<input
+			[(ngModel)]="default_post.title"
+			name="title"
+			id="title"
+			class="form-control"
+			type="text"
+			placeholder="Title"
+		/>
+	</div>
+	<div class="form-group">
+		<label for="body">Body</label>
+		<textarea
+			[(ngModel)]="default_post.body"
+			name="body"
+			id="body"
+			class="form-control"
+			type="text"
+			placeholder="Body"
+		></textarea>
+	</div>
+	<button (click)="createPost()" class="btn btn-primary">Add</button>
+</form>
+<br />
+<ul class="list-group">
+	<li class="list-group-item" *ngFor="let post of posts">
+		<h4>{{ post.title }}</h4>
+		<p>{{ post.body }}</p>
+	</li>
+</ul>
