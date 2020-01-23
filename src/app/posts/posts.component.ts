@@ -5,22 +5,31 @@ import { HttpClient } from "@angular/common/http";
 	templateUrl: "./posts.component.html",
 	styleUrls: ["./posts.component.sass"]
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent {
 	_posts: any;
 	default_post: any = { id: 0, title: "", body: "", userId: "" };
+	_form_setup: any;
+
 	constructor(private http: HttpClient) {
+		this._form_setup = {
+			action_label: "Add",
+			type: "create",
+			action_style: "primary"
+		};
 		this.http
 			.get("https://jsonplaceholder.typicode.com/posts")
 			.subscribe(response => {
 				this._posts = response;
 			});
 	}
-	ngOnInit() {}
 	get posts() {
 		return this._posts;
 	}
-	init_default_post() {
-		this.default_post = { id: 0, title: "", body: "", userId: "" };
+	get form_setup() {
+		return this._form_setup;
+	}
+	init_default_post(id = "", title = "", body = "") {
+		this.default_post = { id: id, title: title, body: body, userId: "" };
 	}
 	createPost() {
 		this.http
@@ -30,5 +39,35 @@ export class PostsComponent implements OnInit {
 				this._posts.push(response);
 				this.init_default_post();
 			});
+	}
+	updatePost() {
+		this.http
+			.put(
+				"https://jsonplaceholder.typicode.com/posts/" + this.default_post.id,
+				this.default_post
+			)
+			.subscribe(response => {
+				this.init_default_post();
+				console.log("%csuccess", "background: #222; color: #bada55");
+			});
+
+		this._posts.forEach((post, index) => {
+			if (post.id === this.default_post.id) {
+				console.log(post.id === this.default_post.id);
+				this._posts[index] = {
+					...post,
+					title: this.default_post.title,
+					body: this.default_post.body
+				};
+			}
+		});
+	}
+	editPost(post) {
+		this.init_default_post(post.id, post.title, post.body);
+		this._form_setup = {
+			action_label: "Update",
+			type: "update",
+			action_style: "danger"
+		};
 	}
 }

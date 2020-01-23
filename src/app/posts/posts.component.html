@@ -1,5 +1,5 @@
 <form>
-	<legend>New Post</legend>
+	<legend>{{form_setup.action_label}} Post</legend>
 	<div class="form-group">
 		<label for="title">Title</label>
 		<input
@@ -22,12 +22,17 @@
 			placeholder="Body"
 		></textarea>
 	</div>
-	<button (click)="createPost()" class="btn btn-primary">Add</button>
+  <button (click)="(form_setup.type == 'create') ? createPost() : updatePost()" class="btn btn-{{form_setup.action_style}}">{{form_setup.action_label}}</button>
 </form>
 <br />
 <ul class="list-group">
 	<li class="list-group-item" *ngFor="let post of posts">
 		<h4>{{ post.title }}</h4>
 		<p>{{ post.body }}</p>
+		<div align="right">
+			<button (click)="editPost(post)" class="btn btn-warning" type="button">
+				Edit
+			</button>
+		</div>
 	</li>
 </ul>
