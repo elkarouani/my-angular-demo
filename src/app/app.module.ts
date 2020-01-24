@@ -16,6 +16,9 @@ import { SignupFormComponent } from "./signup-form/signup-form.component";
 import { PostsComponent } from "./posts/posts.component";
 import { PostsService } from "./services/posts.service";
 import { GithubFollowersComponent } from "./github-followers/github-followers.component";
+import { HomeComponent } from "./home/home.component";
+import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
+import { ProfileFollowerComponent } from "./profile-follower/profile-follower.component";
 
 @NgModule({
 	declarations: [
@@ -28,7 +31,10 @@ import { GithubFollowersComponent } from "./github-followers/github-followers.co
 		ContactFormComponent,
 		SignupFormComponent,
 		PostsComponent,
-		GithubFollowersComponent
+		GithubFollowersComponent,
+		HomeComponent,
+		PageNotFoundComponent,
+		ProfileFollowerComponent
 	],
 	imports: [
 		BrowserModule,
