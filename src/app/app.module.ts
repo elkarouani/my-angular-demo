@@ -19,6 +19,7 @@ import { GithubFollowersComponent } from "./github-followers/github-followers.co
 import { HomeComponent } from "./home/home.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 import { ProfileFollowerComponent } from "./profile-follower/profile-follower.component";
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
 	declarations: [
@@ -34,7 +35,8 @@ import { ProfileFollowerComponent } from "./profile-follower/profile-follower.co
 		GithubFollowersComponent,
 		HomeComponent,
 		PageNotFoundComponent,
-		ProfileFollowerComponent
+		ProfileFollowerComponent,
+		NavbarComponent
 	],
 	imports: [
 		BrowserModule,
