@@ -5,8 +5,8 @@ import { GlobalService } from "./global.service";
 @Injectable({
 	providedIn: "root"
 })
-export class PostsService extends GlobalService {
+export class GithubFollowersService extends GlobalService {
 	constructor(http: HttpClient) {
-		super(http, "https://jsonplaceholder.typicode.com/posts");
+		super(http, "https://api.github.com/users/elkarouani/followers");
 	}
 }

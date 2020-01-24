@@ -15,6 +15,7 @@ import { ContactFormComponent } from "./contact-form/contact-form.component";
 import { SignupFormComponent } from "./signup-form/signup-form.component";
 import { PostsComponent } from "./posts/posts.component";
 import { PostsService } from "./services/posts.service";
+import { GithubFollowersComponent } from "./github-followers/github-followers.component";
 
 @NgModule({
 	declarations: [
@@ -26,7 +27,8 @@ import { PostsService } from "./services/posts.service";
 		InputFormatDirective,
 		ContactFormComponent,
 		SignupFormComponent,
-		PostsComponent
+		PostsComponent,
+		GithubFollowersComponent
 	],
 	imports: [
 		BrowserModule,
