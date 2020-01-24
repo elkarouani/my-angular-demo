@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { PostsService } from "../services/posts.service";
+import { AppError } from "../common/app-errors";
+import { NotFoundError } from "../common/not-found-errors";
+import { BadInput } from "../common/bad-inputs";
 @Component({
 	selector: "app-posts",
 	templateUrl: "./posts.component.html",
@@ -18,8 +21,15 @@ export class PostsComponent implements OnInit {
 		};
 	}
 
-	async ngOnInit() {
-		this._posts = await this.postsService.get_posts_from_service();
+	ngOnInit() {
+		this.postsService.get_posts_from_service().subscribe(
+			response => {
+				this._posts = response;
+			},
+			error => {
+				alert("erreur inattendue");
+			}
+		);
 	}
 
 	get posts() {
@@ -34,23 +44,46 @@ export class PostsComponent implements OnInit {
 	}
 
 	createPostAction() {
-		this.init_default_post();
-		this._posts.push(this.postsService.createPost(this.default_post));
+		this.postsService.createPost(this.default_post).subscribe(
+			response => {
+				let created_post = response;
+				this._posts.push(created_post);
+				this.init_default_post();
+			},
+			(error: AppError) => {
+				if (error instanceof BadInput) {
+					alert("merci de verifié vos informations !!");
+				} else {
+					alert("erreur inattendue");
+				}
+			}
+		);
 	}
 
 	updatePostAction() {
-		this.init_default_post();
-		if (this.postsService.updatePost(this.default_post)) {
-			this._posts.forEach((post, index) => {
-				if (post.id === this.default_post.id) {
-					this._posts[index] = {
-						...post,
-						title: this.default_post.title,
-						body: this.default_post.body
-					};
+		this.postsService.updatePost(this.default_post).subscribe(
+			response => {
+				this._posts.forEach((post, index) => {
+					if (post.id === this.default_post.id) {
+						this._posts[index] = {
+							...post,
+							title: this.default_post.title,
+							body: this.default_post.body
+						};
+					}
+				});
+				this.init_default_post();
+			},
+			(error: AppError) => {
+				if (error instanceof NotFoundError) {
+					alert("ce post est non existe !!");
+				} else if (error instanceof BadInput) {
+					alert("merci de verifié vos informations !!");
+				} else {
+					alert("erreur inattendue");
 				}
-			});
-		}
+			}
+		);
 	}
 
 	editPost(post) {
@@ -63,13 +96,21 @@ export class PostsComponent implements OnInit {
 	}
 
 	deletePost(selected_post) {
-		this.init_default_post();
-		if (this.postsService.deletePost(selected_post)) {
-			this._posts = this._posts.filter(post => {
-				if (post.id !== selected_post.id) {
-					return post;
+		this.postsService.deletePost(selected_post).subscribe(
+			response => {
+				this._posts = this._posts.filter(post => {
+					if (post.id !== selected_post.id) {
+						return post;
+					}
+				});
+			},
+			(error: AppError) => {
+				if (error instanceof NotFoundError) {
+					alert("ce post est non existe !!");
+				} else {
+					alert("erreur inattendue");
 				}
-			});
-		}
+			}
+		);
 	}
 }

@@ -1,5 +1,10 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { Observable, throwError } from "rxjs";
+import { AppError } from "../common/app-errors";
+import { NotFoundError } from "../common/not-found-errors";
+import { BadInput } from "../common/bad-inputs";
 
 @Injectable({
 	providedIn: "root"
@@ -9,45 +14,35 @@ export class PostsService {
 
 	constructor(private http: HttpClient) {}
 
-	async get_posts_from_service() {
-		let result: any;
+	private handleError(error: HttpErrorResponse) {
+		if (error.status === 404) {
+			return throwError(new NotFoundError());
+		}
+		if (error.status === 400) {
+			return throwError(new BadInput());
+		}
+		return throwError(new AppError());
+	}
 
-		result = await this.http.get(this._url).toPromise();
-
-		return result ? result : null;
+	get_posts_from_service() {
+		return this.http.get(this._url).pipe(catchError(this.handleError));
 	}
 
 	createPost(posted_post) {
-		let result: any;
-
-		this.http.post(this._url, posted_post).subscribe(response => {
-			result = response;
-		});
-
-		return result;
+		return this.http
+			.post(this._url, posted_post)
+			.pipe(catchError(this.handleError));
 	}
 
 	updatePost(putted_post) {
-		let result: boolean;
-
-		this.http
+		return this.http
 			.put(this._url + "/" + putted_post.id, putted_post)
-			.subscribe(response => {
-				result = true;
-				console.log("%csuccess", "background: #222; color: #bada55");
-			});
-
-		return result;
+			.pipe(catchError(this.handleError));
 	}
 
 	deletePost(deleted_post) {
-		let result: boolean;
-
-		this.http.delete(this._url + "/" + deleted_post.id).subscribe(response => {
-			result = true;
-			console.log("%csuccess", "background: #222; color: #bada55");
-		});
-
-		return result;
+		return this.http
+			.delete(this._url + "/" + deleted_post.id)
+			.pipe(catchError(this.handleError));
 	}
 }
