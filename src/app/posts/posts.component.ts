@@ -22,13 +22,9 @@ export class PostsComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.postsService.get_posts_from_service().subscribe(
-			response => {
-				this._posts = response;
-			},
-			error => {
-				alert("erreur inattendue");
-			}
+		this.postsService.get_all_from_service().subscribe(
+			posts => (this._posts = posts),
+			error => alert("erreur inattendue")
 		);
 	}
 
@@ -44,12 +40,8 @@ export class PostsComponent implements OnInit {
 	}
 
 	createPostAction() {
-		this.postsService.createPost(this.default_post).subscribe(
-			response => {
-				let created_post = response;
-				this._posts.push(created_post);
-				this.init_default_post();
-			},
+		this.postsService.create(this.default_post).subscribe(
+			created_post => this._posts.push(created_post),
 			(error: AppError) => {
 				if (error instanceof BadInput) {
 					alert("merci de verifié vos informations !!");
@@ -58,10 +50,11 @@ export class PostsComponent implements OnInit {
 				}
 			}
 		);
+		this.init_default_post();
 	}
 
 	updatePostAction() {
-		this.postsService.updatePost(this.default_post).subscribe(
+		this.postsService.update(this.default_post).subscribe(
 			response => {
 				this._posts.forEach((post, index) => {
 					if (post.id === this.default_post.id) {
@@ -96,7 +89,7 @@ export class PostsComponent implements OnInit {
 	}
 
 	deletePost(selected_post) {
-		this.postsService.deletePost(selected_post).subscribe(
+		this.postsService.delete(selected_post).subscribe(
 			response => {
 				this._posts = this._posts.filter(post => {
 					if (post.id !== selected_post.id) {
