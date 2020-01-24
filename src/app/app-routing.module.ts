@@ -6,9 +6,9 @@ import { ProfileFollowerComponent } from "./profile-follower/profile-follower.co
 import { PostsComponent } from "./posts/posts.component";
 import { PageNotFoundComponent } from "./page-not-found/page-not-found.component";
 const routes: Routes = [
-	{ path: "", component: HomeComponent },
+	{ path: "home", component: HomeComponent },
 	{ path: "followers", component: GithubFollowersComponent },
-	{ path: "followers/:username", component: ProfileFollowerComponent },
+	{ path: "followers/:id/:username", component: ProfileFollowerComponent },
 	{ path: "posts", component: PostsComponent },
 	{
 		path: "**",

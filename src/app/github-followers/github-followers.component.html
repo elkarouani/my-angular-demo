@@ -11,7 +11,13 @@
 		/>
 		<div class="media-body" style="padding-left: 10px;">
 			<h4 class="media-heading">{{ follower.login }}</h4>
-			<a href="{{ follower.html_url }}" class="mt-0">{{ follower.html_url }}</a>
+			<a
+				[routerLink]="['/followers', follower.id, follower.login]"
+				[queryParams]="{ page: 1, type: follower.type }"
+				class="mt-0"
+			>
+				{{ follower.html_url }}
+			</a>
 		</div>
 	</li>
 </ul>
