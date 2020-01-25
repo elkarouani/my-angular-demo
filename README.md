@@ -29,3 +29,4 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## Demo links
 
 Github pages: [Angular Demo](https://elkarouani.github.io/my-angular-demo/home)
+Firebase Hosting: [Angular Demo](https://angular-demo-d4a97.firebaseapp.com/)
