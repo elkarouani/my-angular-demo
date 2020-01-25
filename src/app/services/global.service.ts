@@ -6,9 +6,6 @@ import { AppError } from "../common/app-errors";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
 
-@Injectable({
-	providedIn: "root"
-})
 export class GlobalService {
 	constructor(private http: HttpClient, private _url: string) {}
 
