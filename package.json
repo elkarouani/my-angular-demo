@@ -30,7 +30,7 @@
     "core-js": "^2.5.4",
     "express": "^4.17.3",
     "font-awesome": "^4.7.0",
-    "minimist": "^1.2.6",
+    "minimist": "^1.2.7",
     "rxjs": "~6.3.3",
     "serialize-javascript": "^2.1.1",
     "tslib": "^1.9.0",
